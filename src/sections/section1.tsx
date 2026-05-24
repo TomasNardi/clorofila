@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Leaf, ArrowRight, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
 import homepageImg from "../branding/homepage.png";
 
 // ─── Section 1 — Full-screen banner hero ──────────────────────────
@@ -12,11 +13,14 @@ const Section1 = (): JSX.Element => {
     <div className="section min-h-[65vh] md:h-screen relative overflow-hidden">
 
       {/* ── HERO IMAGE — full bleed ── */}
-      <img
+      <motion.img
         src={homepageImg}
         alt="Clorofila — Lámparas de madera artesanales"
-        className="absolute inset-0 w-full h-full object-cover object-center transform scale-105 sm:scale-110 md:scale-100"
+        className="absolute inset-0 w-full h-full object-cover object-center"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
+        initial={{ scale: 1.03 }}
+        animate={{ scale: 1.08 }}
+        transition={{ duration: 12, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
       />
 
       {/* ── Layered overlays for text legibility ── */}
@@ -54,15 +58,20 @@ const Section1 = (): JSX.Element => {
         </div>
 
         {/* Main headline */}
-        <h1 className="
-          text-3xl sm:text-5xl md:text-7xl lg:text-[9rem]
-          font-bold tracking-tight leading-none
-          text-[#f5f0e8]
-          mb-4
-          drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]
-        ">
+        <motion.h1
+          className="
+            text-3xl sm:text-5xl md:text-7xl lg:text-[9rem]
+            font-bold tracking-tight leading-none
+            text-[#f5f0e8]
+            mb-4
+            drop-shadow-[0_4px_24px_rgba(0,0,0,0.5)]
+          "
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
           CLOROFILA
-        </h1>
+        </motion.h1>
 
         {/* Divider */}
         <div className="flex items-center gap-4 mb-5">
@@ -85,7 +94,7 @@ const Section1 = (): JSX.Element => {
 
         {/* CTA row */}
         <div className="flex flex-row gap-3 items-center">
-          <button
+          <motion.button
             onClick={irTienda}
             className="
               flex items-center gap-2
@@ -93,14 +102,15 @@ const Section1 = (): JSX.Element => {
               rounded-full
               bg-[#f5f0e8] text-[#2c2416]
               font-semibold text-sm md:text-base tracking-wide
-              hover:-translate-y-0.5 hover:bg-white
               transition-all duration-300
               shadow-xl shadow-black/30
               cursor-pointer
             "
+            whileHover={{ scale: 1.03, translateY: -3 }}
+            whileTap={{ scale: 0.98 }}
           >
             Ver Tienda <ArrowRight className="w-4 h-4" />
-          </button>
+          </motion.button>
         </div>
       </div>
 
