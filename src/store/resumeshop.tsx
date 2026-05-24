@@ -4,6 +4,7 @@ import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/re
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useContext } from 'react'
 import { ShopCartContext } from '../context/shopcart'
+import { Leaf } from 'lucide-react'
 
 type ResumeShopProps = {
   open: boolean
@@ -15,137 +16,152 @@ const ResumeShop = ({ open, onClose }: ResumeShopProps) => {
   if (!context) return null
 
   const { items, removeItem, addItem, decrementItem } = context
-
   const subtotal = items.reduce((acc, item) => acc + item.price * item.qty, 0)
 
   return (
-    <Dialog open={open} onClose={onClose} className="relative z-10">
-      <DialogBackdrop
-        className="fixed inset-0 bg-gray-500/75 transition-opacity duration-500 ease-in-out data-closed:opacity-0"
-      />
+    <Dialog open={open} onClose={onClose} className="relative z-50">
+      <DialogBackdrop className="fixed inset-0 bg-[#2c2416]/40 backdrop-blur-sm transition-opacity duration-500 ease-in-out data-closed:opacity-0" />
+
       <div className="fixed inset-0 overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
           <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16">
             <DialogPanel className="pointer-events-auto w-screen max-w-md transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700">
-              <div className="flex h-full flex-col overflow-y-auto bg-white shadow-xl">
-                <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-                  <div className="flex items-start justify-between">
-                    <DialogTitle className="text-lg font-medium text-gray-900">Carro de Compras</DialogTitle>
-                    <div className="ml-3 flex h-7 items-center">
-                      <button
-                        type="button"
-                        onClick={onClose}
-                        className="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
-                      >
-                        <span className="absolute -inset-0.5" />
-                        <span className="sr-only">Cerrar Panel</span>
-                        <XMarkIcon aria-hidden="true" className="h-6 w-6"/>
-                      </button>
+              <div className="flex h-full flex-col bg-[#f5f0e8] shadow-2xl">
+
+                {/* ── Header ── */}
+                <div className="px-5 py-5 border-b border-[#e0d5c5] bg-[#2c2416]">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Leaf className="text-[#5a7a4a] w-4 h-4" />
+                      <DialogTitle className="text-base font-semibold text-[#e8dcc8] tracking-wide">
+                        Tu Carrito
+                      </DialogTitle>
                     </div>
-                  </div>
-                  <div className="mt-8">
-                    <div className="flow-root">
-                      <ul role="list" className="-my-6 divide-y divide-gray-200">
-                        {items.length === 0 ? (
-                          <li className="py-6">
-                            <p className="text-sm text-gray-500">Tu carro esta vacio.</p>
-                          </li>
-                        ) : (
-                          items.map((item) => (
-                            <li key={item.id} className="flex py-5">
-                              <div className="ml-4 flex flex-1 flex-col">
-                                <div>
-                                   <img 
-                                      className='h-22
-                                      p-0
-                                      m-0'
-                                      src={item.image} alt="" />
-                                  <div className="flex justify-between text-base font-medium text-gray-900">
-                                    <h3>{item.title}</h3>
-                                    <p className="ml-4">${(item.price * item.qty).toFixed(2)}</p>
-                                  </div>
-                                  <p className="text-xs font-extralight">
-                                    Precio Unitario {item.price}
-                                  </p>
-                                </div>
-                                <div className='hr'>
-                                  <div className="flex items-end justify-between mt-2">
-                                    {/* + / - */}
-                                    <div className="flex gap-2 items-center text-md border border-gray-300 bg-gray-100 p-2 rounded-sm">
-                                      <button
-                                        className="cursor-pointer transition-transform duration-100 ease-in-out hover:scale-110"
-                                        onClick={() =>
-                                          addItem({
-                                            id: item.id,
-                                            title: item.title,
-                                            price: item.price,
-                                            image : item.image
-                                          })
-                                        }
-                                      >
-                                        +
-                                      </button>
-
-                                      <span>{item.qty}</span>
-
-                                      <button
-                                        className="
-                                        hover:scale-110
-                                        transition-transform
-                                        duration-100 
-                                        cursor-pointer
-                                        "
-                                        onClick={() => decrementItem(item.id)}
-                                      >
-                                        −
-                                      </button>
-                                    </div>
-
-                                    {/* eliminar */}
-                                    <button
-                                      onClick={() => removeItem(item.id)}
-                                      className="font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-                                    >
-                                      Eliminar
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </li>
-                          ))
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                  <div className="flex justify-between text-base font-medium text-gray-900">
-                    <p>Monto Total</p>
-                    <p>${subtotal.toFixed(2)}</p>
-                  </div>
-                  <p className="mt-0.5 text-sm text-gray-500">El envío sera acordado al finalizar la compra.</p>
-                  <div className="mt-6">
-                    <a
-                      href="#"
-                      className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700"
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="p-1.5 rounded-full text-[#a89070] hover:text-[#e8dcc8] hover:bg-[#3d3020] transition-colors cursor-pointer"
                     >
-                      Checkout
-                    </a>
-                  </div>
-                  <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                    <p>
-                      or{' '}
-                      <button
-                        type="button"
-                        onClick={onClose}
-                        className="font-medium text-indigo-600 hover:text-indigo-500">
-                        Continuar Comprando
-                        <span aria-hidden="true"> &rarr;</span>
-                      </button>
-                    </p>
+                      <span className="sr-only">Cerrar</span>
+                      <XMarkIcon className="h-5 w-5" aria-hidden="true" />
+                    </button>
                   </div>
                 </div>
+
+                {/* ── Items ── */}
+                <div className="flex-1 overflow-y-auto px-5 py-6">
+                  {items.length === 0 ? (
+                    <div className="flex flex-col items-center justify-center h-full text-center gap-3">
+                      <Leaf className="text-[#c8a96e] w-10 h-10 opacity-40" />
+                      <p className="text-sm text-[#8a7055]">Tu carrito está vacío.</p>
+                      <button
+                        onClick={onClose}
+                        className="text-xs text-[#5a7a4a] underline underline-offset-2 cursor-pointer"
+                      >
+                        Seguir explorando
+                      </button>
+                    </div>
+                  ) : (
+                    <ul className="divide-y divide-[#e0d5c5] space-y-1">
+                      {items.map((item) => (
+                        <li key={item.id} className="py-5 flex gap-4">
+                          {/* Image */}
+                          <div className="w-20 h-24 rounded-xl overflow-hidden shrink-0 bg-[#e8dcc8]">
+                            <img
+                              src={item.image}
+                              alt={item.title}
+                              className="w-full h-full object-cover"
+                              style={{ filter: "saturate(0.85)" }}
+                            />
+                          </div>
+
+                          {/* Info */}
+                          <div className="flex-1 flex flex-col justify-between">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <h3 className="text-sm font-semibold text-[#2c2416] leading-tight">{item.title}</h3>
+                                <p className="text-xs text-[#8a7055] mt-0.5">
+                                  ${item.price.toLocaleString("es-AR")} c/u
+                                </p>
+                              </div>
+                              <p className="text-sm font-bold text-[#2c2416] ml-2">
+                                ${(item.price * item.qty).toLocaleString("es-AR")}
+                              </p>
+                            </div>
+
+                            {/* Qty controls */}
+                            <div className="flex items-center justify-between mt-2">
+                              <div className="flex items-center gap-3 bg-[#e8dcc8] rounded-lg px-3 py-1.5">
+                                <button
+                                  onClick={() => decrementItem(item.id)}
+                                  className="text-[#5c4a30] hover:text-[#2c2416] font-bold text-base leading-none cursor-pointer transition-colors"
+                                >
+                                  −
+                                </button>
+                                <span className="text-sm font-semibold text-[#2c2416] min-w-[1ch] text-center">
+                                  {item.qty}
+                                </span>
+                                <button
+                                  onClick={() => addItem({ id: item.id, title: item.title, price: item.price, image: item.image })}
+                                  className="text-[#5c4a30] hover:text-[#2c2416] font-bold text-base leading-none cursor-pointer transition-colors"
+                                >
+                                  +
+                                </button>
+                              </div>
+
+                              <button
+                                onClick={() => removeItem(item.id)}
+                                className="text-xs text-[#a89070] hover:text-[#c0392b] transition-colors cursor-pointer underline underline-offset-2"
+                              >
+                                Eliminar
+                              </button>
+                            </div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+
+                {/* ── Footer ── */}
+                {items.length > 0 && (
+                  <div className="border-t border-[#e0d5c5] px-5 py-6 bg-white">
+                    <div className="flex justify-between items-center mb-1">
+                      <p className="text-sm text-[#5c4a30]">Subtotal</p>
+                      <p className="text-lg font-bold text-[#2c2416]">
+                        ${subtotal.toLocaleString("es-AR")}
+                      </p>
+                    </div>
+                    <p className="text-xs text-[#a89070] mb-5">
+                      El envío se coordina al finalizar la compra.
+                    </p>
+
+                    <a
+                      href={`https://wa.me/5491135209713?text=Hola!%20Quiero%20comprar:%20${items.map(i => `${i.qty}x%20${encodeURIComponent(i.title)}`).join('%2C%20')}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="
+                        flex items-center justify-center w-full
+                        py-3 rounded-xl
+                         bg-[#4b5744] text-white
+                        font-medium text-sm tracking-wide
+                        hover:bg-[#4a6a3a] transition-colors
+                        shadow-md shadow-[#5a7a4a]/20
+                      "
+                    >
+                      Finalizar por WhatsApp
+                    </a>
+
+                    <button
+                      type="button"
+                      onClick={onClose}
+                      className="mt-3 w-full text-center text-xs text-[#8a7055] hover:text-[#5c4a30] transition-colors cursor-pointer"
+                    >
+                      Seguir comprando →
+                    </button>
+                  </div>
+                )}
+
               </div>
             </DialogPanel>
           </div>
