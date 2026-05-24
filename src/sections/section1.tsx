@@ -20,9 +20,9 @@ const Section1 = (): JSX.Element => {
         alt="Clorofila — Lámparas de madera artesanales (mobile)"
         className="absolute inset-0 w-full h-full object-cover object-center sm:hidden"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
-        initial={{ scale: 1.04 }}
-        animate={{ scale: 1.08 }}
-        transition={{ duration: 10, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
+        initial={{ scale: 0.96 }}
+        animate={{ scale: 1.22 }}
+        transition={{ duration: 8, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
       />
 
       {/* Desktop image (hidden on xs) */}
@@ -31,8 +31,8 @@ const Section1 = (): JSX.Element => {
         alt="Clorofila — Lámparas de madera artesanales"
         className="absolute inset-0 w-full h-full object-cover object-center hidden sm:block"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
-        initial={{ scale: 1.03 }}
-        animate={{ scale: 1.08 }}
+        initial={{ scale: 0.99 }}
+        animate={{ scale: 1.03 }}
         transition={{ duration: 12, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
       />
 
