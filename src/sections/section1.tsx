@@ -31,9 +31,9 @@ const Section1 = (): JSX.Element => {
         alt="Clorofila — Lámparas de madera artesanales"
         className="absolute inset-0 w-full h-full object-cover object-center hidden sm:block"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
-        initial={{ scale: 0.99 }}
-        animate={{ scale: 1.03 }}
-        transition={{ duration: 12, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
+        initial={{ scale: 0.98 }}
+        animate={{ scale: 1.06 }}
+        transition={{ duration: 14, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
       />
 
       {/* ── Layered overlays for text legibility ── */}
