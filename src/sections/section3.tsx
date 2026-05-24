@@ -84,9 +84,11 @@ const Section3: React.FC<SectionProps> = ({ fullpageApi }) => {
           target="_blank"
           rel="noopener noreferrer"
           className="
+            w-full sm:w-auto
+            inline-flex items-center justify-center
             px-8 py-3 rounded-full
-             bg-[#4b5744] text-white
-            font-medium text-base tracking-wide
+            bg-[#4b5744] text-white
+            font-semibold text-sm tracking-wide uppercase
             hover:-translate-y-0.5 hover:bg-[#4a6a3a]
             transition-all duration-300
             shadow-lg shadow-[#5a7a4a]/30
@@ -98,13 +100,18 @@ const Section3: React.FC<SectionProps> = ({ fullpageApi }) => {
         <button
           onClick={() => navigate("/taller")}
           className="
-            flex items-center gap-1.5
-            text-[#c8a96e] text-xs tracking-widest uppercase
-            hover:text-[#e8dcc8] transition-colors duration-300
-            cursor-pointer
+            w-full sm:w-auto
+            inline-flex items-center justify-center gap-2
+            px-8 py-3 rounded-full
+            bg-[#c8a96e] text-[#2c2416]
+            font-semibold text-sm tracking-wide uppercase
+            shadow-lg shadow-[#4b5b35]/25
+            hover:bg-[#b7a96d] hover:text-[#1e2a18]
+            transition-all duration-300
+            border border-transparent
           "
         >
-          <Leaf className="w-3 h-3" />
+          <Leaf className="w-4 h-4" />
           Conocé el taller
         </button>
 

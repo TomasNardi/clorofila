@@ -1,7 +1,7 @@
-import { useContext, useState, useMemo } from "react"
+import { useContext, useState, useMemo, useRef, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { ShopCartContext } from "../context/shopcart"
-import CartShop from "./cartshop"
+// import CartShop from "./cartshop"
 import { Leaf, ArrowLeft, MessageCircle, SlidersHorizontal, X } from "lucide-react"
 import { productos, categories, type Product } from "../data/products"
 
@@ -30,45 +30,72 @@ const contactarProducto = (productTitle: string) => {
 // ─── Product Card ──────────────────────────────────────────────────
 const ProductCard = ({
   product,
+  onPreviewImage,
 }: {
   product: Product
+  onPreviewImage: (preview: { src: string; title: string }) => void
 }) => {
   const { title, subtitle, image, stock, material, tag } = product
+  const [active, setActive] = useState(false)
+  const ref = useRef<HTMLElement | null>(null)
+
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    if (!window.matchMedia("(max-width: 767px)").matches) return
+
+    const node = ref.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.intersectionRatio >= 0.35),
+      { threshold: [0.35] }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
 
   return (
-    <article className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 border border-[#e8dcc8] flex flex-col">
+    <article
+      ref={ref}
+      className={`group bg-white rounded-2xl overflow-hidden shadow-sm transition-all duration-500 border border-[#e8dcc8] flex flex-col transform ${active ? "scale-105 md:scale-100" : "scale-100"} md:group-hover:scale-105`}
+    >
 
       {/* ── Image area ── */}
       <div className="relative overflow-hidden aspect-4/5 bg-[#f0ebe0]">
+        <button
+          type="button"
+          onClick={() => onPreviewImage({ src: image, title })}
+          className="absolute inset-0 w-full h-full cursor-pointer"
+          aria-label={`Ver imagen ampliada de ${title}`}
+        >
+          <img
+            src={image}
+            alt={title}
+            className={`absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out ${active ? "scale-105" : "group-hover:scale-105"}`}
+            style={{ filter: "saturate(0.88) contrast(1.05)" }}
+          />
 
-        {/* Single image with subtle zoom on hover */}
-        <img
-          src={image}
-          alt={title}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          style={{ filter: "saturate(0.88) contrast(1.05)" }}
-        />
+          <div className="absolute inset-0 bg-linear-to-t from-[#1a1208]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-        {/* Bottom gradient */}
-        <div className="absolute inset-0 bg-linear-to-t from-[#1a1208]/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-        {/* Tag badge */}
-        {tag && (
-          <span className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${tagStyles[tag]}`}>
-            {tag}
+          <span className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 text-[10px] text-white uppercase tracking-[0.2em] px-2.5 py-1 pointer-events-none sm:hidden">
+            Tocar para ampliar
           </span>
-        )}
 
-        {/* Discount badge — removed */}
-
-        {/* Out of stock overlay */}
-        {!stock && (
-          <div className="absolute inset-0 z-10 bg-[#f5f0e8]/70 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="px-4 py-1.5 rounded-full bg-[#2c2416]/85 text-[#e8dcc8] text-xs font-semibold tracking-widest uppercase">
-              Sin stock
+          {tag && (
+            <span className={`absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase ${tagStyles[tag]}`}>
+              {tag}
             </span>
-          </div>
-        )}
+          )}
+
+          {!stock && (
+            <div className="absolute inset-0 z-10 bg-[#f5f0e8]/70 backdrop-blur-[2px] flex items-center justify-center">
+              <span className="px-4 py-1.5 rounded-full bg-[#2c2416]/85 text-[#e8dcc8] text-xs font-semibold tracking-widest uppercase">
+                Sin stock
+              </span>
+            </div>
+          )}
+        </button>
       </div>
 
       {/* ── Info area ── */}
@@ -141,6 +168,7 @@ const Home = () => {
   const [activeCategory, setActiveCategory] = useState<string>("all")
   const [onlyStock,      setOnlyStock]      = useState(false)
   const [filtersOpen,    setFiltersOpen]    = useState(false)
+  const [previewImage,   setPreviewImage]   = useState<{ src: string; title: string } | null>(null)
 
   if (!cart) return null
 
@@ -290,11 +318,38 @@ const Home = () => {
               <ProductCard
                 key={p.id}
                 product={p}
+                onPreviewImage={setPreviewImage}
               />
             ))
           )}
         </div>
       </main>
+
+      {previewImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setPreviewImage(null)}
+        >
+          <div
+            className="relative w-full max-w-[min(1100px,calc(100%-2rem))] max-h-[90vh]"
+            onClick={e => e.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setPreviewImage(null)}
+              className="absolute top-3 right-3 z-20 p-2 rounded-full bg-white/90 text-[#2c2416] hover:bg-white shadow-lg"
+            >
+              <X className="w-4 h-4" />
+            </button>
+            <img
+              src={previewImage.src}
+              alt={previewImage.title}
+              className="w-full max-h-[80vh] object-contain rounded-[1.5rem] mx-auto"
+            />
+            <p className="mt-3 text-sm text-white text-center">{previewImage.title}</p>
+          </div>
+        </div>
+      )}
 
       {/* ── Footer ── */}
       <footer className="border-t border-[#e0d5c5] bg-[#2c2416]">
@@ -318,7 +373,7 @@ const Home = () => {
       </footer>
 
       {/* Floating cart */}
-      <CartShop />
+      {/* CartShop temporarily hidden while shopping cart is disabled */}
     </div>
   )
 }
