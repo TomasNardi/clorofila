@@ -3,6 +3,7 @@ import { Leaf, ArrowRight, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import homepageImg from "../branding/homepage.png";
 import homepageMobile from "../branding/homepage_mobile.png";
+import MARQUEE_ITEMS from "../data/marquee";
 
 // ─── Section 1 — Full-screen banner hero ──────────────────────────
 const Section1 = (): JSX.Element => {
@@ -48,14 +49,21 @@ const Section1 = (): JSX.Element => {
       <div className="absolute top-0 left-0 right-0 z-30 overflow-hidden bg-[#2c2416]/80 backdrop-blur-sm py-2">
         <div className="marquee-wrapper text-[#c8a96e]">
           <div className="marquee-content">
-            <span>✦ LÁMPARAS ARTESANALES</span>
-            <span>✦ MADERA NATIVA</span>
-            <span>✦ DISEÑO SUSTENTABLE</span>
-            <span>✦ HECHO A MANO</span>
-            <span>✦ OBJETOS ÚNICOS</span>
-            <span>✦ CLOROFILA</span>
+            {MARQUEE_ITEMS.map((item, idx) => (
+              <span key={`m1-${idx}`} className="mx-6 whitespace-nowrap">
+                {item}
+              </span>
+            ))}
           </div>
-          
+
+          {/* duplicate for seamless infinite loop (aria-hidden) */}
+          <div className="marquee-content" aria-hidden>
+            {MARQUEE_ITEMS.map((item, idx) => (
+              <span key={`m2-${idx}`} className="mx-6 whitespace-nowrap">
+                {item}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
 

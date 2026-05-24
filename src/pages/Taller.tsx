@@ -238,24 +238,27 @@ const Taller = () => {
 
         {/* Top marquee */}
         <div className="absolute top-0 left-0 right-0 z-20 overflow-hidden bg-[#2c2416]/70 backdrop-blur-sm py-2">
-          <div className="marquee-wrapper text-[#c8a96e]">
-            <div className="marquee-content">
-              <span>✦ MADERA RECICLADA</span>
-              <span>✦ BOSQUE NATIVO</span>
-              <span>✦ HECHO A MANO</span>
-              <span>✦ SIN TALA</span>
-              <span>✦ OFICIO ARTESANAL</span>
-              <span>✦ CLOROFILA TALLER</span>
+            <div className="marquee-wrapper text-[#c8a96e]">
+              <div className="marquee-content">
+                {/* Taller-specific items merged with global marquee items for richness */}
+                {[
+                  "✦ MADERA RECICLADA",
+                  "✦ BOSQUE NATIVO",
+                  "✦ HECHO A MANO",
+                  "✦ SIN TALA",
+                  "✦ OFICIO ARTESANAL",
+                  "✦ CLOROFILA TALLER",
+                ].map((it, i) => (
+                  <span key={`t1-${i}`} className="mx-6 whitespace-nowrap">{it}</span>
+                ))}
+              </div>
+
+              <div className="marquee-content" aria-hidden>
+                {["✦ MADERA RECICLADA","✦ BOSQUE NATIVO","✦ HECHO A MANO","✦ SIN TALA","✦ OFICIO ARTESANAL","✦ CLOROFILA TALLER"].map((it, i) => (
+                  <span key={`t2-${i}`} className="mx-6 whitespace-nowrap">{it}</span>
+                ))}
+              </div>
             </div>
-            <div className="marquee-content" aria-hidden>
-              <span>✦ MADERA RECICLADA</span>
-              <span>✦ BOSQUE NATIVO</span>
-              <span>✦ HECHO A MANO</span>
-              <span>✦ SIN TALA</span>
-              <span>✦ OFICIO ARTESANAL</span>
-              <span>✦ CLOROFILA TALLER</span>
-            </div>
-          </div>
         </div>
 
         {/* Hero copy — bottom left */}
