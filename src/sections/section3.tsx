@@ -21,8 +21,8 @@ const cards = [
   },
   {
     icon: Package,
-    title: "Retiro en taller",
-    desc: "Pasá por nuestro taller y llevate tu pieza en el momento.",
+    title: "Retiro en Punto de entrega",
+    desc: "Coorinda con nosotros para retirar tus productos.",
     color: "text-[#c8a96e]",
   },
 ];
