@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Leaf, ArrowRight, ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import homepageImg from "../branding/homepage.png";
+import homepageMobile from "../branding/homepage_mobile.png";
 
 // ─── Section 1 — Full-screen banner hero ──────────────────────────
 const Section1 = (): JSX.Element => {
@@ -13,10 +14,22 @@ const Section1 = (): JSX.Element => {
     <div className="section min-h-[65vh] md:h-screen relative overflow-hidden">
 
       {/* ── HERO IMAGE — full bleed ── */}
+      {/* Mobile-specific image (visible on xs) */}
+      <motion.img
+        src={homepageMobile}
+        alt="Clorofila — Lámparas de madera artesanales (mobile)"
+        className="absolute inset-0 w-full h-full object-cover object-center sm:hidden"
+        style={{ filter: "saturate(0.88) contrast(1.06)" }}
+        initial={{ scale: 1.04 }}
+        animate={{ scale: 1.08 }}
+        transition={{ duration: 10, ease: "easeOut", repeat: Infinity, repeatType: "reverse" }}
+      />
+
+      {/* Desktop image (hidden on xs) */}
       <motion.img
         src={homepageImg}
         alt="Clorofila — Lámparas de madera artesanales"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center hidden sm:block"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
         initial={{ scale: 1.03 }}
         animate={{ scale: 1.08 }}
