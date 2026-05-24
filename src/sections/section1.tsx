@@ -9,13 +9,13 @@ const Section1 = (): JSX.Element => {
   const irTienda = () => navigate("/tienda");
 
   return (
-    <div className="section h-screen relative overflow-hidden">
+    <div className="section min-h-[65vh] md:h-screen relative overflow-hidden">
 
       {/* ── HERO IMAGE — full bleed ── */}
       <img
         src={homepageImg}
         alt="Clorofila — Lámparas de madera artesanales"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-center transform scale-105 sm:scale-110 md:scale-100"
         style={{ filter: "saturate(0.88) contrast(1.06)" }}
       />
 
@@ -38,14 +38,7 @@ const Section1 = (): JSX.Element => {
             <span>✦ OBJETOS ÚNICOS</span>
             <span>✦ CLOROFILA</span>
           </div>
-          <div className="marquee-content" aria-hidden>
-            <span>✦ LÁMPARAS ARTESANALES</span>
-            <span>✦ MADERA NATIVA</span>
-            <span>✦ DISEÑO SUSTENTABLE</span>
-            <span>✦ HECHO A MANO</span>
-            <span>✦ OBJETOS ÚNICOS</span>
-            <span>✦ CLOROFILA</span>
-          </div>
+          
         </div>
       </div>
 
@@ -62,7 +55,7 @@ const Section1 = (): JSX.Element => {
 
         {/* Main headline */}
         <h1 className="
-          text-6xl sm:text-7xl md:text-8xl lg:text-[9rem]
+          text-3xl sm:text-5xl md:text-7xl lg:text-[9rem]
           font-bold tracking-tight leading-none
           text-[#f5f0e8]
           mb-4
@@ -84,7 +77,7 @@ const Section1 = (): JSX.Element => {
           text-sm md:text-lg
           text-[#e8dcc8]/60
           font-light leading-relaxed
-          max-w-xs md:max-w-sm
+          max-w-full md:max-w-sm
           mb-8
         ">
           Cada pieza es única. Cada veta cuenta una historia.

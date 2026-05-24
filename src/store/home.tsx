@@ -79,10 +79,10 @@ const ProductCard = ({
           {material}
         </span>
 
-        <h3 className="font-bold text-[#2c2416] text-base md:text-lg leading-tight mb-0.5">
+        <h3 className="font-bold text-[#2c2416] text-base md:text-lg leading-tight mb-0.5 break-words">
           {title}
         </h3>
-        <p className="text-xs text-[#8a7055] leading-snug mb-4 flex-1">
+        <p className="text-xs text-[#8a7055] leading-snug mb-4 flex-1 break-words">
           {subtitle}
         </p>
 
@@ -104,7 +104,7 @@ const ProductCard = ({
         <button
           onClick={() => contactarProducto(title)}
           className="
-            w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide
+            w-full py-2.5 rounded-xl text-sm font-semibold tracking-wide whitespace-normal
             transition-all duration-300 flex items-center justify-center gap-2
             bg-[#2c2416] text-[#e8dcc8]
             hover:bg-[#3d3020] cursor-pointer
@@ -133,7 +133,6 @@ const EmptyState = ({ onReset }: { onReset: () => void }) => (
     </button>
   </div>
 )
-
 // ─── Page ──────────────────────────────────────────────────────────
 const Home = () => {
   const cart     = useContext(ShopCartContext)
@@ -158,7 +157,7 @@ const Home = () => {
 
       {/* ── Sticky header ── */}
       <header className="sticky top-0 z-40 bg-[#f5f0e8]/95 backdrop-blur-md border-b border-[#e0d5c5]">
-        <div className="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 h-12 md:h-16 flex items-center justify-between gap-4">
 
           <button
             onClick={() => navigate("/")}
@@ -173,7 +172,7 @@ const Home = () => {
             className="flex items-center gap-2 cursor-pointer"
           >
             <Leaf className="text-[#5a7a4a] w-5 h-5" />
-            <span className="text-lg md:text-xl font-bold text-[#2c2416] tracking-tight">CLOROFILA</span>
+            <span className="text-base sm:text-lg md:text-xl font-bold text-[#2c2416] tracking-tight">CLOROFILA</span>
           </button>
 
           <div className="flex items-center gap-3 shrink-0">
@@ -205,14 +204,14 @@ const Home = () => {
             backgroundSize: "12px 12px",
           }}
         />
-        <div className="relative max-w-6xl mx-auto px-5 md:px-8 py-12 md:py-16 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+        <div className="relative max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-16 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <p className="text-xs tracking-[0.35em] uppercase text-[#8a7055] mb-2">Colección 2026</p>
-            <h1 className="text-3xl md:text-5xl font-bold text-[#e8dcc8] leading-tight">
-              Nuestra Tienda
-            </h1>
+            <h1 className="text-2xl md:text-5xl font-bold text-[#e8dcc8] leading-tight break-words">
+                  Nuestra Tienda
+                </h1>
           </div>
-          <p className="text-sm text-[#a89070] font-light max-w-xs leading-relaxed">
+          <p className="text-sm md:text-base text-[#a89070] font-light max-w-full md:max-w-xs leading-relaxed break-words">
             Lámparas y objetos de madera trabajados a mano.<br className="hidden md:block" />
             Cada pieza, única.
           </p>
@@ -220,18 +219,18 @@ const Home = () => {
       </div>
 
       {/* ── Filters bar ── */}
-      <div className={`
+        <div className={`
         bg-[#ede8dc] border-b border-[#e0d5c5]
         transition-all duration-300
         ${filtersOpen ? "block" : "hidden md:block"}
       `}>
-        <div className="max-w-6xl mx-auto px-5 md:px-8 py-3 md:py-4 flex flex-wrap items-center gap-2 md:gap-3">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 py-2 md:py-4 flex items-center gap-2 md:gap-3 overflow-x-auto">
 
           {/* Category filters */}
-          <div className="flex flex-wrap gap-2 flex-1">
+          <div className="flex gap-2 flex-1 whitespace-nowrap">
             <button
               onClick={() => setActiveCategory("all")}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+              className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                 activeCategory === "all"
                   ? "bg-[#2c2416] text-[#e8dcc8] shadow-sm"
                   : "bg-white text-[#5c4a30] border border-[#e0d5c5] hover:border-[#8a7055]"
@@ -246,7 +245,7 @@ const Home = () => {
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
+                  className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer ${
                     activeCategory === cat
                       ? "bg-[#2c2416] text-[#e8dcc8] shadow-sm"
                       : "bg-white text-[#5c4a30] border border-[#e0d5c5] hover:border-[#8a7055]"
@@ -283,7 +282,7 @@ const Home = () => {
 
       {/* ── Product grid ── */}
       <main className="max-w-6xl mx-auto px-5 md:px-8 py-4 pb-20">
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           {filtered.length === 0 ? (
             <EmptyState onReset={() => { setActiveCategory("all"); setOnlyStock(false) }} />
           ) : (
