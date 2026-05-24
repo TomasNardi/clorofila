@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Leaf, ArrowRight } from "lucide-react";
+import { Leaf, ArrowRight, ChevronDown } from "lucide-react";
 import { featuredProducts } from "../data/products";
 
 // ─── Tag color map ─────────────────────────────────────────────────
@@ -23,7 +23,7 @@ const Section2 = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="section min-h-screen bg-[#ede8dc] flex flex-col items-center justify-center px-6 md:px-16 py-14 md:py-20">
+    <div className="section relative min-h-screen bg-[#ede8dc] flex flex-col items-center justify-center px-6 md:px-16 py-14 md:py-20" style={{ touchAction: "pan-y" }}>
 
       {/* ── Header ── */}
       <div className="text-center mb-10 md:mb-14 max-w-xl">
@@ -51,7 +51,7 @@ const Section2 = () => {
           {/* Featured large card */}
           <div
             className="col-span-1 md:col-span-2 relative group overflow-hidden rounded-2xl cursor-pointer"
-            style={{ minHeight: "280px" }}
+            style={{ minHeight: "280px", touchAction: "pan-y" }}
             onClick={() => navigate("/tienda")}
           >
             {featuredProducts[0]?.tag && (
@@ -81,7 +81,7 @@ const Section2 = () => {
               <div
                 key={p.id}
                 className="relative group overflow-hidden rounded-2xl cursor-pointer flex-1"
-                style={{ minHeight: "130px" }}
+                style={{ minHeight: "130px", touchAction: "pan-y" }}
                 onClick={() => navigate("/tienda")}
               >
                 {p.tag && (
@@ -113,7 +113,7 @@ const Section2 = () => {
             <div
               key={p.id}
               className="relative group overflow-hidden rounded-2xl cursor-pointer"
-              style={{ minHeight: "160px" }}
+              style={{ minHeight: "160px", touchAction: "pan-y" }}
               onClick={() => navigate("/tienda")}
             >
               {p.tag && (
@@ -137,6 +137,14 @@ const Section2 = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      {/* ── Scroll hint for section 2 — visible on desktop and mobile */}
+      <div className="absolute bottom-8 right-8 md:right-14 z-20 flex flex-col items-center gap-1 opacity-80 pointer-events-none">
+        <span className="text-[10px] tracking-[0.2em] uppercase text-[#5c4a30] rotate-90 mb-2">
+          scroll
+        </span>
+        <ChevronDown className="text-[#5c4a30] w-4 h-4 animate-bounce" />
       </div>
 
       {/* ── CTA + pills row ── */}
